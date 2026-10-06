@@ -1,0 +1,229 @@
+/* Portal Perfin — tokens e base (identidade Perfin: sóbria, cantos vivos, sem sombras). */
+:root {
+  --perfin-azul: #101b2a;
+  --perfin-ardosia: #415765;
+  --perfin-off-white: #f9f4f4;
+  --perfin-cinza-claro: #e6e7e8;
+  --perfin-cinza: #6d6e71;
+  --branco: #ffffff;
+
+  --grafico-1: #101b2a;
+  --grafico-2: #415765;
+  --grafico-3: #6d8b9e;
+  --grafico-4: #9fb3bf;
+  --grafico-5: #c9d3d9;
+  --grafico-6: #6d6e71;
+  --alerta: #a85a4a;
+  --positivo: #4a7a6b;
+
+  --fonte-titulo-pilha: var(--fonte-titulo), "Century Gothic", sans-serif;
+  --fonte-corpo-pilha: var(--fonte-corpo), "Montserrat", sans-serif;
+
+  --margem: 24px;
+  --largura-max: 1440px;
+  --altura-nav-inferior: 64px;
+}
+
+@media (min-width: 900px) {
+  :root {
+    --margem: 48px;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--perfin-cinza-claro);
+  color: var(--perfin-azul);
+  font-family: var(--fonte-corpo-pilha);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--fonte-titulo-pilha);
+  font-weight: 400;
+  line-height: 1.15;
+  margin: 0 0 12px;
+}
+
+h1 {
+  font-size: clamp(28px, 4vw, 40px);
+}
+
+h2 {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 16px;
+  font-weight: 500;
+  font-family: var(--fonte-corpo-pilha);
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+  border-radius: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--perfin-ardosia);
+  outline-offset: 2px;
+}
+
+code {
+  font-size: 13px;
+  word-break: break-all;
+}
+
+/* ---------- Botões e formulários ---------- */
+.botao {
+  display: inline-block;
+  background: var(--perfin-azul);
+  color: var(--perfin-off-white);
+  border: 1px solid var(--perfin-azul);
+  padding: 12px 28px;
+  min-height: 44px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.botao:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.botao--secundario {
+  background: transparent;
+  color: var(--perfin-azul);
+}
+
+.link-botao {
+  background: none;
+  border: 0;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.formulario {
+  display: grid;
+  gap: 8px;
+  max-width: 420px;
+}
+
+.formulario input,
+.formulario select,
+.formulario textarea,
+.campo {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--perfin-cinza);
+  background: var(--branco);
+}
+
+.formulario button {
+  margin-top: 8px;
+  justify-self: start;
+}
+
+.alerta {
+  color: var(--alerta);
+  margin: 4px 0;
+}
+
+.sucesso {
+  color: var(--positivo);
+  margin: 4px 0;
+}
+
+.texto-apoio {
+  color: var(--perfin-cinza);
+  max-width: 60ch;
+}
+
+.texto-legal {
+  color: var(--perfin-cinza);
+  font-size: 12px;
+}
+
+.marca {
+  font-family: var(--fonte-titulo-pilha);
+  font-size: 18px;
+  letter-spacing: 0;
+  margin: 0 0 32px;
+}
+
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Telas de entrada (login, offline, acesso negado) ---------- */
+.tela-entrada {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  background: var(--perfin-azul);
+  padding: var(--margem);
+}
+
+.tela-entrada__caixa {
+  width: min(480px, 100%);
+  background: var(--perfin-off-white);
+  padding: 48px 32px;
+  display: grid;
+  gap: 16px;
+  justify-items: start;
+}
+
+/* ---------- Aviso de atualização do app ---------- */
+.aviso-atualizacao {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: calc(var(--altura-nav-inferior) + 16px + env(safe-area-inset-bottom));
+  z-index: 50;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--perfin-ardosia);
+  color: var(--perfin-off-white);
+  padding: 12px 16px;
+}
+
+@media (min-width: 900px) {
+  .aviso-atualizacao {
+    left: auto;
+    bottom: 24px;
+    max-width: 420px;
+  }
+}

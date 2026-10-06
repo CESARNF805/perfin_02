@@ -1,0 +1,50 @@
+# ============================================================
+# IMPORTANTE: a pasta .claude/ DEVE ser versionada no GitHub.
+# Ela contém CLAUDE.md, agents, skills, rules e hooks do projeto,
+# compartilhados por toda a equipe. NÃO adicione .claude/ aqui.
+# Apenas arquivos locais/pessoais do Claude Code são ignorados.
+# ============================================================
+.claude/settings.local.json
+.claude/*.local.*
+
+# Variáveis de ambiente (segredos) — nunca versionar
+.env
+.env.*
+!.env.example
+# Anotações locais com segredos — nunca versionar (o ideal é nem ficar na pasta)
+Dados Perfin.txt
+
+# Dependências
+node_modules/
+
+# Build / frameworks
+.next/
+out/
+dist/
+build/
+.vercel/
+.turbo/
+coverage/
+
+# Supabase local
+supabase/.temp/
+supabase/.branches/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Sistema operacional / editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Diversos
+*.tsbuildinfo
+*.pem

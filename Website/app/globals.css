@@ -1,0 +1,175 @@
+/* Site Perfin — identidade institucional: sóbria, espaçosa, cantos vivos, sem sombras. */
+:root {
+  --azul: #101b2a;
+  --ardosia: #415765;
+  --off-white: #f9f4f4;
+  --cinza-claro: #e6e7e8;
+  --cinza: #6d6e71;
+  --margem: 24px;
+  --secao: 52px;
+}
+
+@media (min-width: 900px) {
+  :root {
+    --margem: 72px;
+    --secao: 104px;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--off-white);
+  color: var(--azul);
+  font-family: var(--fonte-corpo), "Montserrat", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+h1,
+h2 {
+  font-family: var(--fonte-titulo), "Century Gothic", sans-serif;
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0 0 24px;
+}
+
+h1 {
+  font-size: clamp(40px, 7vw, 94px);
+}
+
+h2 {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0 0 8px;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 4px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ardosia);
+  outline-offset: 2px;
+}
+
+.cabecalho {
+  background: var(--azul);
+  color: var(--off-white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 28px var(--margem);
+}
+
+.cabecalho__marca {
+  font-family: var(--fonte-titulo), sans-serif;
+  font-size: 28px;
+  text-decoration: none;
+}
+
+.cabecalho__menu {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  color: var(--cinza-claro);
+}
+
+.secao {
+  padding: var(--secao) var(--margem);
+}
+
+.secao--escura {
+  background: var(--azul);
+  color: var(--off-white);
+}
+
+.secao--ardosia {
+  background: var(--ardosia);
+  color: var(--off-white);
+}
+
+.texto {
+  max-width: 60ch;
+}
+
+.apoio {
+  color: var(--cinza);
+  font-size: 14px;
+}
+
+.secao--escura .apoio,
+.secao--ardosia .apoio {
+  color: var(--cinza-claro);
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
+  gap: 40px;
+}
+
+.indicador {
+  border-left: 1px solid var(--cinza-claro);
+  padding-left: 24px;
+  min-width: 0;
+}
+
+.indicador__valor {
+  font-family: var(--fonte-titulo), sans-serif;
+  font-size: 48px;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.grafico {
+  width: 100%;
+  height: 240px;
+  margin-top: 16px;
+}
+
+.lista-cartas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 32px;
+}
+
+.lista-cartas li {
+  border-left: 1px solid var(--cinza-claro);
+  padding-left: 24px;
+}
+
+.carta p {
+  max-width: 65ch;
+}
+
+.rodape {
+  background: var(--cinza-claro);
+  padding: 40px var(--margem);
+  font-size: 14px;
+}
+
+.disclaimer {
+  margin: 0;
+  background: var(--cinza);
+  color: var(--off-white);
+  font-size: 10px;
+  line-height: 16px;
+  padding: 16px var(--margem);
+}
