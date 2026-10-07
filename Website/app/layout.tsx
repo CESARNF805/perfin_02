@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Nunito_Sans, Poppins } from "next/font/google";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/next";
 import { DISCLAIMER } from "@/lib/textos";
 import "./globals.css";
 
@@ -31,6 +32,7 @@ export default function LayoutSite({ children }: { children: ReactNode }) {
           <p>© {new Date().getFullYear()} Perfin. Todos os direitos reservados.</p>
         </footer>
         <p className="disclaimer">{DISCLAIMER}</p>
+        <Analytics />
       </body>
     </html>
   );
