@@ -4,7 +4,7 @@ import { listarCartas } from "@/lib/dados";
 import { formatarDataExtenso, formatarMesExtenso, paragrafos } from "@/lib/formatacao";
 
 export const metadata: Metadata = { title: "Carta mensal" };
-export const revalidate = 600;
+export const dynamic = "force-dynamic";
 
 export default async function PaginaCartas() {
   const cartas = await listarCartas();

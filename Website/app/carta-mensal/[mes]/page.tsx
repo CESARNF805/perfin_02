@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { buscarCarta } from "@/lib/dados";
 import { formatarDataExtenso, formatarMesExtenso, paragrafos } from "@/lib/formatacao";
 
-export const revalidate = 600;
+export const dynamic = "force-dynamic";
 
 type Props = { params: Promise<{ mes: string }> };
 
