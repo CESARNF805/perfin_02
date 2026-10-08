@@ -1,0 +1,43 @@
+name: Banco
+
+on:
+  pull_request:
+    paths:
+      - "Aplicativo/supabase/**"
+      - ".github/workflows/banco.yml"
+  push:
+    branches: [main]
+    paths:
+      - "Aplicativo/supabase/**"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: banco-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  migrations-rls:
+    name: Migrations do zero + testes de RLS
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: Aplicativo
+    steps:
+      - uses: actions/checkout@v5
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      # Supabase local (Postgres + Auth). Aplica todas as migrations em banco vazio.
+      - name: Subir Supabase local
+        run: supabase start -x studio,storage-api,imgproxy,realtime,edge-runtime,logflare,vector,supavisor,mailpit,postgres-meta
+      - name: Testes de RLS (pgTAP)
+        run: supabase test db
+      - name: Lint do esquema
+        run: supabase db lint --level error
+      - name: Parar Supabase
+        if: always()
+        run: supabase stop --no-backup

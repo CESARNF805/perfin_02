@@ -1,0 +1,31 @@
+# Configuração do Supabase LOCAL, usada só no CI (workflow Banco) para aplicar
+# as migrations do zero e rodar os testes de RLS. Não afeta o projeto na nuvem.
+project_id = "perfin-02"
+
+[db]
+major_version = 17
+
+[api]
+enabled = true
+
+[auth]
+enabled = true
+site_url = "http://127.0.0.1:3000"
+
+[studio]
+enabled = false
+
+[storage]
+enabled = false
+
+[realtime]
+enabled = false
+
+[edge_runtime]
+enabled = false
+
+[analytics]
+enabled = false
+
+[inbucket]
+enabled = false

@@ -4,8 +4,8 @@ import { buscarPainelPublico } from "@/lib/dados";
 import { formatarDataExtenso, formatarValor } from "@/lib/formatacao";
 
 export const metadata: Metadata = { title: "Indicadores" };
-/** Revalida a cada hora (o Portal atualiza o snapshot uma vez por dia útil). */
-export const revalidate = 3600;
+/** Gerada a cada acesso: o build não depende do banco e o conteúdo varia conforme quem está logado. */
+export const dynamic = "force-dynamic";
 
 export default async function PaginaIndicadores() {
   const painel = await buscarPainelPublico();
