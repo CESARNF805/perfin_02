@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Instruções — Login e cadastro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul: #101B2A; --cinza-azul: #415765; --creme: #F9F4F4; --cinza-claro: #E6E7E8; --cinza: #6D6E71;
+    --voce: #8A5A00; --voce-fundo: #FFF3DC; --claude: #1F4E79; --claude-fundo: #E3EEF8; --juntos: #2E6B3A; --juntos-fundo: #E3F2E6;
+  }
+  @page { size: A4; margin: 16mm 14mm 18mm; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Nunito Sans", Arial, sans-serif; font-size: 10.5pt; line-height: 1.45; color: var(--azul); background: #fff; }
+  h1, h2, h3, h4 { font-family: Poppins, Arial, sans-serif; margin: 0 0 6px; line-height: 1.25; }
+  h1 { font-size: 26pt; }
+  h2 { font-size: 15pt; margin-top: 22px; padding-bottom: 4px; border-bottom: 2px solid var(--azul); }
+  h3 { font-size: 12pt; margin-top: 16px; }
+  h4 { font-size: 10.5pt; margin-top: 10px; }
+  p { margin: 4px 0 8px; }
+  code, .valor { font-family: Consolas, "Courier New", monospace; font-size: 9pt; background: var(--cinza-claro); padding: 1px 4px; word-break: break-all; }
+  .valor { display: block; padding: 6px 8px; margin: 4px 0 8px; border-left: 3px solid var(--azul); }
+  table { width: 100%; border-collapse: collapse; margin: 6px 0 10px; font-size: 9.5pt; }
+  th, td { border: 1px solid var(--cinza-claro); padding: 5px 6px; text-align: left; vertical-align: top; }
+  th { background: var(--azul); color: var(--creme); font-family: Poppins, Arial, sans-serif; font-weight: 600; }
+  ol, ul { margin: 4px 0 8px; padding-left: 20px; }
+  li { margin: 2px 0; }
+  .capa { background: var(--azul); color: var(--creme); padding: 34px 30px 30px; margin-bottom: 18px; }
+  .capa .marca { font-family: Poppins, Arial, sans-serif; letter-spacing: 4px; text-transform: uppercase; font-size: 10pt; opacity: .8; }
+  .capa p { color: var(--cinza-claro); max-width: 640px; }
+  .tag { display: inline-block; font-family: Poppins, Arial, sans-serif; font-size: 8pt; font-weight: 700; padding: 1px 7px; letter-spacing: .5px; vertical-align: middle; }
+  .tag.voce { background: var(--voce-fundo); color: var(--voce); border: 1px solid var(--voce); }
+  .tag.claude { background: var(--claude-fundo); color: var(--claude); border: 1px solid var(--claude); }
+  .tag.juntos { background: var(--juntos-fundo); color: var(--juntos); border: 1px solid var(--juntos); }
+  .caixa { border: 1px solid var(--cinza-claro); padding: 10px 12px; margin: 8px 0; }
+  .alerta { border-left: 4px solid #B3261E; background: #FCEEEE; padding: 8px 12px; margin: 8px 0; }
+  .dica { border-left: 4px solid var(--cinza-azul); background: var(--creme); padding: 8px 12px; margin: 8px 0; }
+  .conferir { border-left: 4px solid var(--juntos); background: var(--juntos-fundo); padding: 6px 10px; margin: 6px 0 10px; font-size: 9.5pt; }
+  .conferir::before { content: "Como conferir: "; font-weight: 700; }
+  .fluxo { display: grid; grid-template-columns: 1fr 26px 1fr 26px 1fr; align-items: center; gap: 4px; margin: 10px 0; }
+  .no { border: 2px solid var(--azul); padding: 8px; text-align: center; font-size: 9pt; min-height: 70px; display: flex; flex-direction: column; justify-content: center; }
+  .no strong { font-family: Poppins, Arial, sans-serif; }
+  .seta { text-align: center; font-size: 16pt; color: var(--cinza-azul); }
+  .linha-tempo { counter-reset: etapa; list-style: none; padding: 0; }
+  .linha-tempo li { counter-increment: etapa; border-left: 3px solid var(--azul); padding: 4px 0 8px 34px; position: relative; margin: 0; }
+  .linha-tempo li::before { content: counter(etapa); position: absolute; left: -14px; top: 2px; width: 24px; height: 24px; background: var(--azul); color: var(--creme); font-family: Poppins, Arial, sans-serif; font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 9pt; }
+  .check { list-style: none; padding-left: 4px; }
+  .check li::before { content: "☐  "; font-size: 11pt; }
+  .quebra { break-before: page; }
+  .evitar-quebra { break-inside: avoid; }
+  .rodape-doc { margin-top: 24px; font-size: 8.5pt; color: var(--cinza); border-top: 1px solid var(--cinza-claro); padding-top: 6px; }
+</style>
+</head>
+<body>
+
+<section class="capa">
+  <div class="marca">Perfin</div>
+  <h1>Login e cadastro no site e no Portal</h1>
+  <p>Guia de execução compartilhado: o que <strong>você</strong> configura (painéis do Google, Supabase, Vercel, Resend e GitHub), o que o <strong>Claude</strong> constrói no código e como validamos juntos antes do merge.</p>
+  <p style="font-size:9pt">Versão de 08/10/2026 · Projeto Supabase <code style="background:#24324a;color:#fff">pgafhfknvreynfyixuxl</code> · Repositório <code style="background:#24324a;color:#fff">CESARNF805/perfin_02</code></p>
+</section>
+
+<h2>1. Visão geral</h2>
+<p>Legenda usada em todo o guia: <span class="tag voce">VOCÊ</span> só você pode fazer (painéis com login, chaves, DNS) · <span class="tag claude">CLAUDE</span> eu faço no código / GitHub · <span class="tag juntos">JUNTOS</span> validação conjunta.</p>
+
+<h3>O que muda para quem usa</h3>
+<table>
+  <tr><th style="width:22%">Quem</th><th>Como entra</th><th>O que acessa</th></tr>
+  <tr><td><strong>Visitante</strong></td><td>—</td><td>Site: indicadores (12 meses) e cartas dos últimos 3 meses.</td></tr>
+  <tr><td><strong>Cliente</strong> (qualquer pessoa)</td><td>Botão <em>Entrar / Cadastrar</em> no canto inferior direito do site: e-mail e senha ou Google.</td><td>Site completo: histórico de cartas, painel ampliado (5 anos), Minha conta, alertas por e-mail. <strong>Nunca</strong> acessa o Portal.</td></tr>
+  <tr><td><strong>Equipe</strong> (@perfin.com.br)</td><td>Portal: Google (recomendado) ou e-mail e senha com e-mail confirmado. Também pode entrar pelo site.</td><td>Portal inteiro. Agenda, Relatórios (Drive) e Gmail exigem "Conectar Google" uma vez.</td></tr>
+  <tr><td><strong>Admin</strong></td><td>Sem mudança: <code>ADMIN_USER</code> + senha + código do autenticador (MFA).</td><td>Portal + área de administração (agora com abas Equipe | Clientes).</td></tr>
+</table>
+
+<h3>Como o login funciona (dois clientes Google)</h3>
+<div class="fluxo evitar-quebra">
+  <div class="no"><strong>Site / Portal</strong>Botão "Continuar com Google"</div>
+  <div class="seta">→</div>
+  <div class="no"><strong>Supabase Auth</strong>usa o cliente Google<br><em>"Perfin Login"</em> (novo, Externo)</div>
+  <div class="seta">→</div>
+  <div class="no"><strong>Google</strong>pede só nome e e-mail<br>e devolve para o Supabase</div>
+</div>
+<div class="fluxo evitar-quebra">
+  <div class="no"><strong>Portal</strong>"Conectar Google"<br>(só equipe)</div>
+  <div class="seta">→</div>
+  <div class="no"><strong>Google</strong>cliente <em>"Portal Perfin"</em><br>(o atual, Interno)</div>
+  <div class="seta">→</div>
+  <div class="no"><strong>Portal</strong>guarda o acesso cifrado<br>para Agenda, Drive e Gmail</div>
+</div>
+<div class="dica"><strong>Por que dois?</strong> O consentimento <em>Interno</em> só aceita contas da Perfin, então não serve para clientes. Já Gmail e Agenda são permissões restritas que o Google não libera num app <em>Externo</em> sem uma auditoria paga. Separando, o login serve para todos e as permissões sensíveis ficam só com a equipe.</div>
+
+<h3>As URLs de redirecionamento (a resposta direta)</h3>
+<table>
+  <tr><th style="width:34%">Onde cadastrar</th><th>URL</th></tr>
+  <tr><td>Google → cliente <strong>"Perfin Login"</strong> (novo) → URIs de redirecionamento autorizados</td><td><span class="valor">https://pgafhfknvreynfyixuxl.supabase.co/auth/v1/callback</span>Uma URL só, que vale para o site e para o Portal, em produção e nos previews.</td></tr>
+  <tr><td>Google → cliente <strong>"Portal Perfin"</strong> (atual) → URIs de redirecionamento autorizados</td><td><span class="valor">https://&lt;URL-DO-PORTAL&gt;/api/google/retorno</span>Também a do preview da PR: <code>https://&lt;URL-DO-BRANCH-DO-PORTAL&gt;/api/google/retorno</code>.</td></tr>
+  <tr><td>Supabase → Authentication → URL Configuration → Redirect URLs</td><td><span class="valor">https://&lt;URL-DO-SITE&gt;/**</span><span class="valor">https://&lt;URL-DO-PORTAL&gt;/**</span><span class="valor">https://*-cesarnf.vercel.app/**</span>A última cobre os previews das PRs.</td></tr>
+</table>
+<p><code>&lt;URL-DO-SITE&gt;</code> e <code>&lt;URL-DO-PORTAL&gt;</code> são os domínios de produção da Vercel, sem <code>https://</code> e sem barra no final (veja a etapa B).</p>
+
+<h2 class="quebra">2. Linha do tempo</h2>
+<ol class="linha-tempo">
+  <li><span class="tag voce">VOCÊ</span> <strong>A. Segurança</strong> e <strong>F1. secret da coleta</strong>. Pode ser já: não depende de nada.<br><span class="tag claude">CLAUDE</span> em paralelo, <strong>Issue + PR A (esteira de CI)</strong>, merge quando os checks passarem.</li>
+  <li><span class="tag voce">VOCÊ</span> <strong>E. Resend</strong>: comece cedo, porque o DNS depende da TI e pode levar horas. <strong>B. Vercel</strong>: crie o projeto do Portal e <strong>me envie as duas URLs de produção</strong>.</li>
+  <li><span class="tag voce">VOCÊ</span> <strong>C. Google Cloud</strong> e <strong>D. Supabase</strong>, que dependem das URLs da etapa B.<br><span class="tag claude">CLAUDE</span> <strong>Issue + PR B (login/cadastro + banco)</strong>: código, testes, migration validada no CI e aplicada no Supabase.</li>
+  <li><span class="tag juntos">JUNTOS</span> eu testo o que é público no preview da PR B. <strong>Você</strong> roda o <strong>roteiro de aceite</strong> (seção 4) e me responde "ok" ou o item que falhou.</li>
+  <li><span class="tag claude">CLAUDE</span> faço o merge da PR B. <span class="tag voce">VOCÊ</span> aprova a proteção da <code>main</code> (F2).</li>
+  <li><span class="tag claude">CLAUDE</span> <strong>Issue + PR C (alertas por e-mail)</strong>, que exige o Resend pronto. <span class="tag juntos">JUNTOS</span> aceite e merge.</li>
+</ol>
+<div class="alerta"><strong>Regra de ouro:</strong> nunca me envie chaves, senhas ou tokens pelo chat. Cadastre-os direto nos painéis (Vercel, Supabase, GitHub). Para mim, basta dizer "feito" em cada bloco e mandar as <strong>URLs</strong>, que não são segredo.</div>
+
+<h2>3. Suas tarefas, passo a passo</h2>
+
+<h3><span class="tag voce">VOCÊ</span> A. Segurança (antes de tudo)</h3>
+<ol>
+  <li>Tire o arquivo <code>Dados Perfin.txt</code> da pasta do projeto e do OneDrive. Ele tem segredos em texto puro. Guarde-o num cofre de senhas.</li>
+  <li><strong>Troque as chaves que estiveram nesse arquivo:</strong>
+    <ul>
+      <li>Google Cloud (projeto atual) → Google Auth Platform → Clients → cliente "Portal Perfin" → <em>Add secret</em>; depois desative o secret antigo.</li>
+      <li>Google AI Studio → API keys → crie uma chave nova do Gemini e apague a antiga. Restrinja a chave à <em>Generative Language API</em>.</li>
+    </ul>
+  </li>
+  <li>Atualize o seu <code>.env</code> local para os nomes do <code>.env.example</code>:
+    <ul>
+      <li><code>SUPABASE_URL</code> → <code>NEXT_PUBLIC_SUPABASE_URL</code>;</li>
+      <li><code>SUPABASE_PUBLISHABLE_KEY</code> → <code>NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</code>;</li>
+      <li><strong>apague <code>ADMIN_PASSWORD</code></strong>: a senha do admin passa a existir só no Supabase.</li>
+    </ul>
+  </li>
+  <li><strong>Decisão: o repositório continua público?</strong> Não há segredos nele (conferido), mas as regras de negócio ficam visíveis.
+    <table>
+      <tr><th>Opção</th><th>Prós</th><th>Contras</th></tr>
+      <tr><td>Manter público</td><td>CodeQL e proteção da <code>main</code> grátis</td><td>Código visível para qualquer um</td></tr>
+      <tr><td><strong>Privado + GitHub Pro (recomendado)</strong></td><td>Código fechado e proteção da <code>main</code> (exige o plano Pro, cerca de US$ 4/mês)</td><td>Sem o CodeQL; a varredura de segredos (gitleaks) continua</td></tr>
+      <tr><td>Privado sem Pro</td><td>Grátis</td><td>Sem proteção obrigatória da <code>main</code></td></tr>
+    </table>
+    Para mudar: GitHub → repositório → Settings → General → Danger Zone → <em>Change visibility</em>. Me avise da escolha.
+  </li>
+</ol>
+
+<h3><span class="tag voce">VOCÊ</span> B. Vercel</h3>
+<h4>B1. Confirmar a URL do site</h4>
+<ol>
+  <li>vercel.com → time <em>cesarnf</em> → projeto <strong>perfin-site</strong> → Settings → <strong>Domains</strong>. Anote o domínio de produção, que é a <code>&lt;URL-DO-SITE&gt;</code>.
+    <div class="alerta"><code>perfin-site.vercel.app</code> <strong>não é nosso</strong>: pertence a outra conta e mostra outro site. O nosso será algo como <code>perfin-site-xxxx.vercel.app</code>, ou um domínio próprio.</div></li>
+  <li>Settings → <strong>Deployment Protection</strong> → <em>Vercel Authentication</em> → <strong>Standard Protection</strong>. Assim a produção fica pública e os previews continuam protegidos.</li>
+  <li>Confirme que o projeto usa <strong>Root Directory = <code>Website</code></strong> (Settings → Build and Deployment).</li>
+</ol>
+<h4>B2. Criar o projeto do Portal</h4>
+<ol>
+  <li>Add New → Project → importe <code>CESARNF805/perfin_02</code> → nome <strong>perfin-portal</strong> → <strong>Root Directory = <code>Aplicativo</code></strong> → Framework <em>Next.js</em>.</li>
+  <li>Cadastre as variáveis da tabela B3 e clique em <em>Deploy</em>. Anote o domínio de produção, que é a <code>&lt;URL-DO-PORTAL&gt;</code>.</li>
+  <li>Preencha <code>NEXT_PUBLIC_SITE_URL</code> com a URL do Portal (só no ambiente <em>Production</em>) e faça <em>Redeploy</em>.</li>
+  <li>Em Deployment Protection, também use <strong>Standard Protection</strong>.</li>
+  <li><strong>Me envie as duas URLs</strong>, do site e do Portal.</li>
+</ol>
+<h4>B3. Variáveis de ambiente</h4>
+<p>Em Settings → Environment Variables, cadastre cada variável para <em>Production</em> e <em>Preview</em>, salvo onde indicado. <strong>Não</strong> cadastre <code>NEXT_PUBLIC_SITE_URL</code> em <em>Preview</em>: nos previews o sistema usa sozinho a URL do branch.</p>
+<table>
+  <tr><th>Variável</th><th>Portal</th><th>Site</th><th>De onde vem</th></tr>
+  <tr><td><code>NEXT_PUBLIC_SITE_URL</code></td><td>✔ (só Production)</td><td>✔ (só Production)</td><td>A URL de produção do próprio projeto, com <code>https://</code></td></tr>
+  <tr><td><code>NEXT_PUBLIC_SUPABASE_URL</code></td><td>✔</td><td>✔</td><td><code>https://pgafhfknvreynfyixuxl.supabase.co</code></td></tr>
+  <tr><td><code>NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY</code></td><td>✔</td><td>✔</td><td>Supabase → Project Settings → API Keys → <em>Publishable key</em></td></tr>
+  <tr><td><code>NEXT_PUBLIC_PORTAL_URL</code></td><td>—</td><td>✔</td><td>URL do Portal (para o link "Abrir o Portal")</td></tr>
+  <tr><td><code>NEXT_PUBLIC_WEBSITE_URL</code></td><td>✔</td><td>—</td><td>URL do site (link "Ir para o site" no acesso negado)</td></tr>
+  <tr><td><code>SUPABASE_SECRET_KEY</code></td><td>✔</td><td>—</td><td>Supabase → API Keys → <em>Secret keys</em> → criar. Nunca no site.</td></tr>
+  <tr><td><code>GOOGLE_CLIENT_ID</code> / <code>GOOGLE_CLIENT_SECRET</code></td><td>✔</td><td>—</td><td>Cliente <strong>"Portal Perfin" (Interno, o atual)</strong>, com o secret novo da etapa A</td></tr>
+  <tr><td><code>ALLOWED_GOOGLE_DOMAIN</code></td><td>✔</td><td>—</td><td><code>perfin.com.br</code></td></tr>
+  <tr><td><code>ADMIN_USER</code></td><td>✔</td><td>—</td><td>E-mail do admin</td></tr>
+  <tr><td><code>GEMINI_API_KEY</code> / <code>GEMINI_MODEL</code></td><td>✔</td><td>—</td><td>Chave nova (etapa A) / <code>gemini-flash-latest</code></td></tr>
+  <tr><td><code>TOKEN_ENCRYPTION_KEY</code></td><td>✔</td><td>—</td><td>Gere uma vez (comando abaixo). Não troque depois: as conexões Google salvas deixariam de abrir.</td></tr>
+  <tr><td><code>CRON_SECRET</code></td><td>✔</td><td>—</td><td>Gere (comando abaixo)</td></tr>
+  <tr><td><code>GITHUB_REPO</code> / <code>GITHUB_ACTIONS_TOKEN</code></td><td>✔</td><td>—</td><td><code>CESARNF805/perfin_02</code> / token da etapa F3 (opcional)</td></tr>
+  <tr><td><code>RESEND_API_KEY</code>, <code>EMAIL_REMETENTE</code>, <code>ALERTAS_SEGREDO</code></td><td>✔ (só na PR C)</td><td>—</td><td>Etapa E; <code>ALERTAS_SEGREDO</code> é gerado com o comando abaixo</td></tr>
+</table>
+<p>Para gerar um valor aleatório seguro, rode no terminal, uma vez por variável:</p>
+<span class="valor">node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"</span>
+<div class="conferir">abra <code>&lt;URL-DO-PORTAL&gt;/login</code> e <code>&lt;URL-DO-SITE&gt;</code> numa janela anônima: as duas abrem sem pedir login da Vercel.</div>
+<div class="dica"><strong>Opcional:</strong> no Claude, reconecte o conector da Vercel dando acesso ao time <em>cesarnf</em>. Hoje ele responde "403" e não consigo conferir deploys e variáveis por ele.</div>
+
+<h3 class="quebra"><span class="tag voce">VOCÊ</span> C. Google Cloud</h3>
+<h4>C1. Novo projeto "Perfin Login" (para todos: clientes e equipe)</h4>
+<ol>
+  <li>console.cloud.google.com → seletor de projetos → <em>New project</em> → nome <strong>Perfin Login</strong>.</li>
+  <li>Menu → APIs &amp; Services → <strong>Google Auth Platform</strong> → <em>Get started</em>:
+    <ul>
+      <li><strong>App name:</strong> Perfin · <strong>User support email:</strong> um e-mail da Perfin;</li>
+      <li><strong>Audience: External</strong>;</li>
+      <li><strong>Contact information:</strong> um e-mail da Perfin.</li>
+    </ul>
+  </li>
+  <li><strong>Branding:</strong>
+    <ul>
+      <li>App home page: <code>https://&lt;URL-DO-SITE&gt;</code>;</li>
+      <li>Privacy policy: <code>https://&lt;URL-DO-SITE&gt;/privacidade</code>;</li>
+      <li>Terms: <code>https://&lt;URL-DO-SITE&gt;/termos</code>;</li>
+      <li>Authorized domains: <code>pgafhfknvreynfyixuxl.supabase.co</code>. Se o Google recusar, use <code>supabase.co</code>.</li>
+    </ul>
+  </li>
+  <li><strong>Data Access</strong> → Add or remove scopes → marque só <code>openid</code>, <code>.../auth/userinfo.email</code> e <code>.../auth/userinfo.profile</code> → Save.</li>
+  <li><strong>Clients</strong> → Create client → <em>Web application</em> → nome "Perfin Login (Supabase)" → <strong>Authorized redirect URIs:</strong>
+    <span class="valor">https://pgafhfknvreynfyixuxl.supabase.co/auth/v1/callback</span>
+    Create. Copie o <strong>Client ID</strong> e o <strong>Client secret</strong> direto para o Supabase (etapa D2), não para o <code>.env</code>.</li>
+  <li><strong>Audience</strong> → <em>Publish app</em> (status <strong>In production</strong>). Com só esses três scopes, não há verificação do Google. Enquanto ficar em "Testing", só os e-mails de teste conseguem entrar.</li>
+</ol>
+<div class="dica">Na tela do Google, o cliente verá "continuar para <em>pgafhfknvreynfyixuxl.supabase.co</em>". Para mostrar "Perfin", é preciso um domínio próprio (ex.: <code>login.perfin.com.br</code>) com o domínio personalizado do Supabase. Fica como melhoria futura.</div>
+
+<h4>C2. Projeto atual (cliente "Portal Perfin", Interno)</h4>
+<ol>
+  <li>Confirme: Google Auth Platform → Audience = <strong>Internal</strong>. As APIs <em>Google Calendar, Google Drive, Google Sheets e Gmail</em> precisam estar ativadas (APIs &amp; Services → Library).</li>
+  <li>Clients → "Portal Perfin" → <strong>Authorized redirect URIs</strong> → adicione:
+    <span class="valor">https://&lt;URL-DO-PORTAL&gt;/api/google/retorno</span>
+    Quando eu abrir a PR B, adicione também a do preview, que eu informo: <code>https://perfin-portal-git-&lt;branch&gt;-cesarnf.vercel.app/api/google/retorno</code>.</li>
+  <li>A URL antiga do Supabase nesse cliente pode ficar. Ele deixa de ser usado no login.</li>
+</ol>
+<div class="conferir">na etapa D, o botão Google do site abre a tela do Google mostrando só "nome, e-mail e foto".</div>
+
+<h3><span class="tag voce">VOCÊ</span> D. Supabase</h3>
+<p>supabase.com → projeto <strong>Perfin_02</strong> → menu <strong>Authentication</strong>.</p>
+<h4>D1. URL Configuration</h4>
+<ul>
+  <li><strong>Site URL:</strong> <code>https://&lt;URL-DO-SITE&gt;</code></li>
+  <li><strong>Redirect URLs</strong>: adicione as três linhas da tabela da seção 1.</li>
+</ul>
+<h4>D2. Sign In / Providers</h4>
+<ul>
+  <li><strong>Email:</strong> Enable · <strong>Confirm email ON</strong> · <strong>Secure email change ON</strong> · <strong>Secure password change ON</strong> · Minimum password length <strong>10</strong> · Password requirements: <em>letters and digits</em>.</li>
+  <li><strong>Google:</strong> Enable · Client ID e Client secret do cliente <strong>"Perfin Login"</strong> (C1) · <em>Skip nonce checks</em> OFF · Save. A Callback URL mostrada ali deve ser igual à cadastrada no Google.</li>
+  <li><strong>Allow new users to sign up: ON.</strong> Os cadastros novos nascem como <em>cliente</em> e nunca veem o Portal.</li>
+</ul>
+<h4>D3. Emails → SMTP Settings (depois da etapa E)</h4>
+<ul>
+  <li>Enable custom SMTP · Sender email <code>nao-responda@&lt;seu-domínio-no-Resend&gt;</code> · Sender name <strong>Perfin</strong>.</li>
+  <li>Host <code>smtp.resend.com</code> · Port <code>465</code> · Username <code>resend</code> · Password = a API key do Resend.</li>
+  <li>Em <strong>Rate Limits</strong>: e-mails por hora = <strong>60</strong>.</li>
+</ul>
+<div class="alerta">Sem SMTP próprio, o Supabase envia só poucos e-mails por hora e eles costumam cair no spam. Isso basta para um teste rápido, mas não para clientes.</div>
+<h4>D4. Emails → Templates (copie exatamente)</h4>
+<table>
+  <tr><th style="width:22%">Modelo</th><th style="width:28%">Assunto</th><th>Corpo (HTML)</th></tr>
+  <tr><td>Confirm signup</td><td>Confirme seu cadastro na Perfin</td><td><code>&lt;h2&gt;Bem-vindo(a) à Perfin&lt;/h2&gt;&lt;p&gt;Confirme seu e-mail para ativar a conta:&lt;/p&gt;&lt;p&gt;&lt;a href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&amp;type=email"&gt;Confirmar e-mail&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Se você não pediu este cadastro, ignore esta mensagem.&lt;/p&gt;</code></td></tr>
+  <tr><td>Reset password</td><td>Redefinição de senha — Perfin</td><td><code>&lt;h2&gt;Redefinir senha&lt;/h2&gt;&lt;p&gt;Recebemos um pedido para trocar sua senha:&lt;/p&gt;&lt;p&gt;&lt;a href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&amp;type=recovery"&gt;Criar nova senha&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Se não foi você, ignore esta mensagem; sua senha continua a mesma.&lt;/p&gt;</code></td></tr>
+  <tr><td>Change email address</td><td>Confirme seu novo e-mail — Perfin</td><td><code>&lt;h2&gt;Confirmar novo e-mail&lt;/h2&gt;&lt;p&gt;&lt;a href="{{ .RedirectTo }}?token_hash={{ .TokenHash }}&amp;type=email_change"&gt;Confirmar alteração&lt;/a&gt;&lt;/p&gt;</code></td></tr>
+</table>
+<h4>D5. Multi-Factor, admin e banco</h4>
+<ol>
+  <li><strong>Multi-Factor:</strong> TOTP = <em>Enabled</em>.</li>
+  <li><strong>Users</strong> → Add user → Create new user → e-mail de <code>ADMIN_USER</code> + senha forte e nova + <em>Auto Confirm User</em>. No primeiro login em <code>&lt;URL-DO-PORTAL&gt;/admin/login</code>, cadastre o autenticador <strong>imediatamente</strong>.</li>
+  <li><strong>SQL Editor:</strong> defina a senha do papel da coleta (troque o texto entre aspas por uma senha forte; não me envie a senha):
+    <span class="valor">alter role etl_indicadores with password 'TROQUE-POR-UMA-SENHA-FORTE';</span></li>
+  <li>A migration nova (clientes) <strong>eu aplico</strong>. Você não precisa rodar SQL de tabela.</li>
+</ol>
+<div class="conferir">Authentication → Providers mostra Email e Google ativos, e Users mostra o admin com "Confirmed".</div>
+
+<h3><span class="tag voce">VOCÊ</span> E. Resend (envio de e-mails)</h3>
+<ol>
+  <li>resend.com → crie a conta com um e-mail da Perfin.</li>
+  <li><strong>Domains</strong> → Add domain → sugestão: <code>mail.perfin.com.br</code>. Assim o domínio principal e os e-mails da equipe ficam intactos.</li>
+  <li>O Resend mostra registros DNS (TXT de SPF e DKIM, MX de retorno). <strong>Envie para a TI</strong> criar no DNS de <code>perfin.com.br</code> e depois clique em <em>Verify</em>.</li>
+  <li><strong>API Keys</strong> → Create → permissão <em>Sending access</em>, restrita ao domínio → copie direto para o Supabase (D3). Na PR C, também para a Vercel (<code>RESEND_API_KEY</code>).</li>
+</ol>
+<div class="conferir">o domínio aparece como <strong>Verified</strong> no Resend. No Supabase, Authentication → Emails → <em>Send test email</em> chega na caixa de entrada, não no spam.</div>
+
+<h3><span class="tag voce">VOCÊ</span> F. GitHub</h3>
+<ol>
+  <li><strong>F1. Coleta diária</strong> (hoje falha todo dia por falta deste secret): repositório → Settings → Secrets and variables → Actions → <em>New repository secret</em> → nome <code>INDICADORES_DATABASE_URL</code>, com o valor:
+    <span class="valor">postgresql://etl_indicadores.pgafhfknvreynfyixuxl:SUA-SENHA-D5@aws-0-sa-east-1.pooler.supabase.com:5432/postgres</span>
+    Depois: Actions → "Coleta de indicadores (BCB)" → <em>Run workflow</em>. O resultado deve ficar verde.</li>
+  <li><strong>F2. Proteção da <code>main</code></strong>: quando eu pedir, responda "pode aplicar". Eu configuro via <code>gh</code>: PR obrigatória, checks obrigatórios e sem force push.</li>
+  <li><strong>F3. Botão "Coletar agora" (opcional):</strong> github.com/settings/personal-access-tokens → <em>Fine-grained</em> → só o repositório <code>perfin_02</code> → permissão <strong>Actions: Read and write</strong> → cadastre-o como <code>GITHUB_ACTIONS_TOKEN</code> na Vercel do Portal.</li>
+  <li><strong>F4.</strong> Acompanhe as PRs: você recebe o link de cada uma e pode comentar nelas.</li>
+</ol>
+
+<h2 class="quebra">4. <span class="tag juntos">JUNTOS</span> Roteiro de aceite (você executa no preview da PR B)</h2>
+<p>Use uma janela anônima e, se possível, o celular. Eu envio os links do preview. Para cada item, responda ✔ ou descreva o que viu.</p>
+<h4>Site — cliente com e-mail e senha</h4>
+<ul class="check">
+  <li>O botão "Entrar / Cadastrar" aparece no canto inferior direito, no computador e no celular.</li>
+  <li>Criar conta sem marcar os Termos → o formulário não envia e avisa o motivo.</li>
+  <li>Criar conta com um e-mail pessoal → aparece "Confira seu e-mail" → o e-mail chega → o link confirma e já entra logado.</li>
+  <li>Sair e entrar de novo com e-mail e senha. Com senha errada, a mensagem é genérica.</li>
+  <li>"Esqueci minha senha" → o e-mail chega → criar uma senha nova → entrar com ela.</li>
+  <li>Logado: /carta-mensal mostra o histórico completo e /indicadores mostra 5 anos. Deslogado: só 3 meses de cartas e 12 de indicadores.</li>
+  <li>Minha conta: trocar o nome, ligar e desligar os alertas, sair.</li>
+  <li>Excluir conta (digitando EXCLUIR) → não consigo mais entrar com aquele e-mail.</li>
+</ul>
+<h4>Site — Google</h4>
+<ul class="check">
+  <li>"Continuar com Google" com uma conta <strong>@gmail.com</strong> → volta logado como cliente; o menu <strong>não</strong> mostra "Abrir o Portal".</li>
+  <li>Com uma conta <strong>@perfin.com.br</strong> → o menu mostra "Abrir o Portal".</li>
+</ul>
+<h4>Portal</h4>
+<ul class="check">
+  <li>Google @perfin.com.br → entra → pede "Conectar Google" uma vez → Agenda e Relatórios funcionam.</li>
+  <li>Criar conta com senha @perfin.com.br → confirmar o e-mail → entrar → aparece a faixa "Conectar Google".</li>
+  <li>Criar conta com e-mail de fora → recusado ("só e-mails da Perfin").</li>
+  <li>A conta de cliente (@gmail.com) tenta o Portal → "Área exclusiva da equipe Perfin".</li>
+  <li>Admin: /admin/login → senha → código do autenticador → área admin com as abas Equipe | Clientes.</li>
+  <li>Admin → Publicação: marcar um indicador como "Só para clientes" → ele some do site para o visitante e aparece para o cliente logado.</li>
+  <li>PWA instalado no celular: login e sair funcionam dentro do app.</li>
+</ul>
+
+<h2>5. <span class="tag claude">CLAUDE</span> Minhas tarefas</h2>
+<table>
+  <tr><th style="width:24%">Entrega</th><th>O que faço</th><th style="width:28%">Como valido</th></tr>
+  <tr><td><strong>PR A</strong> Esteira de CI</td><td>
+    <ul>
+      <li>Issue no GitHub.</li>
+      <li>CI com build, auditoria de dependências e actions atualizadas.</li>
+      <li>Varredura de segredos (gitleaks) e CodeQL (se o repositório for público).</li>
+      <li>Validação de migrations + testes de RLS num Supabase local.</li>
+      <li>Modelo de PR e issues, Dependabot e documentação da esteira.</li>
+    </ul>
+  </td><td>Todos os checks verdes na própria PR. Depois, a proteção da <code>main</code> (com o seu OK).</td></tr>
+  <tr><td><strong>PR B</strong> Login e cadastro</td><td>
+    <ul>
+      <li><strong>Banco:</strong> papel <em>cliente</em>, gatilho de cadastro, correção do <code>is_membro</code>, RPCs de Minha conta e exclusão, conteúdo por nível.</li>
+      <li><strong>Site:</strong> botão flutuante, painel Entrar/Criar conta, páginas de senha e confirmação, Minha conta, Termos/Privacidade (texto provisório), conteúdo exclusivo.</li>
+      <li><strong>Portal:</strong> login com senha, cadastro só @perfin, "Conectar Google" próprio, faixa de aviso, Admin com Equipe/Clientes e "Só para clientes".</li>
+      <li>Documentação.</li>
+    </ul>
+  </td><td>
+    <ul>
+      <li>Testes automatizados.</li>
+      <li>RLS testado no CI e no banco real.</li>
+      <li>Revisão de código.</li>
+      <li>Preview: páginas, celular e nenhuma chave no navegador.</li>
+      <li>O seu aceite (seção 4).</li>
+    </ul>
+  </td></tr>
+  <tr><td><strong>PR C</strong> Alertas por e-mail</td><td>
+    <ul>
+      <li>Envio pelo Resend quando uma carta é publicada, só para quem marcou a opção.</li>
+      <li>Link "não quero mais receber" em 1 clique.</li>
+    </ul>
+  </td><td>Testes e um envio real para o seu e-mail.</td></tr>
+</table>
+<p>Cada etapa fica registrada no <code>log_perfin.txt</code> da Área de Trabalho.</p>
+
+<h2>6. Referência rápida — erros comuns</h2>
+<table>
+  <tr><th style="width:32%">Mensagem</th><th>Causa e solução</th></tr>
+  <tr><td><code>Error 400: redirect_uri_mismatch</code></td><td>A URL de retorno não está cadastrada no cliente Google certo. Confira a tabela da seção 1: o cliente "Perfin Login" usa a URL do Supabase, e o "Portal Perfin" usa <code>/api/google/retorno</code>.</td></tr>
+  <tr><td><code>Error 403: org_internal</code></td><td>Uma conta de fora tentou usar o cliente Interno. Confira se o provider Google do Supabase está com o cliente <strong>"Perfin Login"</strong> (D2).</td></tr>
+  <tr><td>"Acesso bloqueado: app não verificado" ou só os testadores entram</td><td>O projeto "Perfin Login" está em <em>Testing</em>. Clique em <em>Publish app</em> (C1, passo 6).</td></tr>
+  <tr><td>Depois do login, volta para a página errada</td><td>A URL não está em Supabase → Redirect URLs (D1).</td></tr>
+  <tr><td>"Email not confirmed"</td><td>Falta clicar no link do e-mail de confirmação. Se o e-mail não chegou, veja o spam e o SMTP (D3/E).</td></tr>
+  <tr><td>O e-mail não chega</td><td>O domínio não está verificado no Resend ou bateu o limite de envio. Veja Resend → Logs e Supabase → Authentication → Logs.</td></tr>
+  <tr><td>Página do Portal com "Variáveis de ambiente ausentes"</td><td>Falta uma variável da tabela B3 no ambiente certo. Corrija e faça <em>Redeploy</em>.</td></tr>
+</table>
+
+<p class="rodape-doc">Guia gerado pelo Claude (Claude Code) para o projeto Perfin_02. A fonte fica em <code>Documentacao/guias/instrucoes-login.html</code>. Os textos de Termos, Privacidade e o aviso regulatório precisam de validação do compliance antes da divulgação pública.</p>
+</body>
+</html>
